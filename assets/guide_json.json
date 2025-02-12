@@ -24,6 +24,27 @@
             {
               "guideEntryRenderer": {
                 "navigationEndpoint": {
+                  "clickTrackingParams": "CAIQtSwYACITCLSowKe7jIsDFZDMFgkdakQqlg==",
+                  "signInEndpoint": {
+                    "hack": false
+                  }
+                },
+                "icon": {
+                  "iconType": "SIGN_IN"
+                },
+                "trackingParams": "CA0QtSwYACITCLSowKe7jIsDFZDMFgkdakQqlg==",
+                "formattedTitle": {
+                  "runs": [
+                    {
+                      "text": "Sign in"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "guideEntryRenderer": {
+                "navigationEndpoint": {
                   "clickTrackingParams": "CAsQtSwYACITCLSowKe7jIsDFZDMFgkdakQqlg==",
                   "searchEndpoint": {
                     "query": ""
@@ -47,7 +68,7 @@
                 "navigationEndpoint": {
                   "clickTrackingParams": "CAoQtSwYASITCLSowKe7jIsDFZDMFgkdakQqlg==",
                   "browseEndpoint": {
-                    "browseId": "FEtopics"
+                    "browseId": "home"
                   }
                 },
                 "icon": {
@@ -121,48 +142,6 @@
                   "runs": [
                     {
                       "text": "Music"
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              "guideEntryRenderer": {
-                "navigationEndpoint": {
-                  "clickTrackingParams": "CAYQtSwYBSITCLSowKe7jIsDFZDMFgkdakQqlg==",
-                  "browseEndpoint": {
-                    "browseId": "FEsubscriptions"
-                  }
-                },
-                "icon": {
-                  "iconType": "SUBSCRIPTIONS"
-                },
-                "trackingParams": "CAYQtSwYBSITCLSowKe7jIsDFZDMFgkdakQqlg==",
-                "formattedTitle": {
-                  "runs": [
-                    {
-                      "text": "Subscriptions"
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              "guideEntryRenderer": {
-                "navigationEndpoint": {
-                  "clickTrackingParams": "CAUQtSwYBiITCLSowKe7jIsDFZDMFgkdakQqlg==",
-                  "browseEndpoint": {
-                    "browseId": "FElibrary"
-                  }
-                },
-                "icon": {
-                  "iconType": "WATCH_LATER"
-                },
-                "trackingParams": "CAUQtSwYBiITCLSowKe7jIsDFZDMFgkdakQqlg==",
-                "formattedTitle": {
-                  "runs": [
-                    {
-                      "text": "Library"
                     }
                   ]
                 }

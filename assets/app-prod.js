@@ -10042,7 +10042,9 @@
             this.f.gd(this);
             this.tb = !0
         }
+
         C(Q, K);
+        
         d = Q.prototype;
         d.ready = function () {
             this.hB()
@@ -10078,9 +10080,30 @@
             13 == a.keyCode && this.Xe(a)
         };
         d.Vi = function () {
-            this.f.Fj();
-            this.model && this.model.fc && this.model.Ab && this.model.enabled && this.f.Va(this.model.fc, x(this.XU, this), void 0, void 0, this.model.FB)
-        };
+            console.log("Calling this.f.Fj()...");
+            this.f.Fj();  // Log before calling Fj
+        
+            if (this.model) {
+                console.log("Model exists:", this.model);
+                if (this.model.fc) {
+                    console.log("Model has fc:", this.model.fc);
+                }
+                if (this.model.Ab) {
+                    console.log("Model has Ab:", this.model.Ab);
+                }
+                if (this.model.enabled) {
+                    console.log("Model is enabled:", this.model.enabled);
+                }
+                
+                if (this.model.fc && this.model.Ab && this.model.enabled) {
+                    console.log("Calling this.f.Va with model.fc:", this.model.fc);
+                    console.log("Additional parameters:", x(this.XU, this), void 0, void 0, this.model.FB);
+                    this.f.Va(this.model.fc, x(this.XU, this), void 0, void 0, this.model.FB);
+                }
+            } else {
+                console.log("No model found");
+            }
+        };        
         d.XU = function () {
             this.H && (v(this.yp) && this.yp(), this.Xe())
         };
@@ -30278,12 +30301,29 @@
             a.model = c;
             return a
         }
+        
         uu.f = function (a) {
-            var b = L(a.formattedTitle),
-                c = n("thumbnail.thumbnails.0.url", a) || "",
-                e = dc[n("icon.iconType", a)];
-            return new tu(b, c, e, a.navigationEndpoint)
+            console.log('Entering uu.f function with argument:', a);
+        
+            // Log formattedTitle
+            var b = L(a.formattedTitle);
+            console.log('Formatted Title:', b);
+        
+            // Log thumbnail URL (if it exists)
+            var c = n("thumbnail.thumbnails.0.url", a) || "";
+            console.log('Thumbnail URL:', c);
+        
+            // Log icon type (if it exists)
+            var e = dc[n("icon.iconType", a)];
+            console.log('Icon Type:', e);
+        
+            // Log navigation endpoint
+            console.log('Navigation Endpoint:', a.navigationEndpoint);
+        
+            return new tu(b, c, e, a.navigationEndpoint);
         };
+        
+
         uu.inject = ["component", "source"];
 
         function vu(a, b) {
@@ -30298,15 +30338,48 @@
             this.g = b;
             this.i = a
         }
+
         wu.prototype.f = function (a, b, c) {
-            if (!b) throw new ki("Missing source parameter.");
+            console.log('Entering wu.prototype.f with arguments:', a, b, c);
+        
+            // Check if b is provided, if not throw an error
+            if (!b) {
+                console.log('Error: Missing source parameter.');
+                throw new ki("Missing source parameter.");
+            }
+        
             var e = ub(b);
-            if (!e) throw new ki("Missing or empty component type ID.");
+            console.log('Component type ID extracted:', e);
+        
+            // If e is falsy, throw an error
+            if (!e) {
+                console.log('Error: Missing or empty component type ID.');
+                throw new ki("Missing or empty component type ID.");
+            }
+        
             var f = this.i[e];
-            if (!f) throw new ki('Unrecognized component type ID: "' + e + '".');
-            c && this.h(c, f) || (c = ze(f.oa, this.g));
-            return this.l(c, b[e], a, f)
+            console.log('Found component type:', f);
+        
+            // If f is falsy, throw an error
+            if (!f) {
+                console.log('Error: Unrecognized component type ID:', e);
+                throw new ki('Unrecognized component type ID: "' + e + '".');
+            }
+        
+            // Check if c exists, otherwise, assign a default value
+            if (c) {
+                console.log('Calling this.h with c and f:', c, f);
+                this.h(c, f);
+            } else {
+                c = ze(f.oa, this.g);
+                console.log('Assigned default value to c:', c);
+            }
+        
+            // Call this.l and return the result
+            console.log('Calling this.l with c, b[e], a, f');
+            return this.l(c, b[e], a, f);
         };
+        
         wu.prototype.h = function (a, b) {
             return !!a.oa && a.oa === b.oa
         };
@@ -35534,6 +35607,9 @@
                     oa: "guideButton",
                     Ya: uu
                 },
+                guideEntryRendererJustForData: {
+                    oa: ""
+                },
                 guideFooterRenderer: {
                     oa: "guideButton",
                     Ya: vu
@@ -36056,7 +36132,8 @@
                 </div>
                 <div class="guide-button-title">{{model.label}}</div>
             </div>
-            `);              
+            `);        
+
             a.register("guide_button.html", '<div>  <div class="guide-button-icon {{model.iconClass}}">    <div class="$image" data-image-url="{{model.iconUrl}}"></div>  </div>  <div class="guide-button-title">{{model.label}}</div></div>');
             a.register("horizontal_list.html", '<div>  <div class="no-content-message">    <div class="text">{{noContentMessage}}</div>  </div>  <div class="content"></div></div>');
             a.register("icon_button.html", '<div>  <span class="icon {{getIconClass()}}"></span>  <span class="label">{{model.label}}</span></div>');
@@ -36463,8 +36540,10 @@
                     return a.model.ag
                 },
                 unlimitedStatus: function (a) {
-                    return a.unlimitedStatus
-                },
+                   console.log("unlimitedStatus: ", a.model.stuff[0].items[0].guideAccountEntryRenderer.title.accessibility.accessibilityData.label); // Fallback logging
+
+                    return "" // We don't want this to be used!
+                },                
                 catchRowMouseMove: function (a) {
                     return a.ut
                 },
@@ -36512,9 +36591,12 @@
                 },
                 userAvatar: function (a) {
 
-                    var avatar = a.dr ? a.dr : APP_URL + "/assets/default_pfp.png"; 
+                    console.log("userAvatar: ", a.model.stuff[0].items[0].guideAccountEntryRenderer.thumbnail.thumbnails[0].url); // Fallback logging
+
+                    var avatar = a.model.stuff[0].items[0].guideAccountEntryRenderer.thumbnail.thumbnails[0].url ? a.model.stuff[0].items[0].guideAccountEntryRenderer.thumbnail.thumbnails[0].url : APP_URL + "/assets/default_pfp.png"; 
                 
                     console.log("moron", a); 
+
                     return avatar;
                 },               
                 "model.durationMinutes": function (a) {
@@ -36614,7 +36696,7 @@
                     return a.model.qL()
                 },
                 userName: function (a) {
-                    return a.userName
+                    return  a.model.stuff[0].items[0].guideAccountEntryRenderer.title.runs[0].text
                 },
                 platformUserIcon: function (a) {
                     return a.wi

@@ -496,16 +496,19 @@ app.post('/api/browse', async (req, res) => {
 async function handleGuideRequest(req, res) {
     console.log(`Received ${req.method} request for /api/guide`);
 
+
+    const authHeader = req.headers['authorization'];
+    const authToken = authHeader && authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
+
     try {
-        const guideData = await fetchGuideData();
+        const guideData = await fetchGuideData(authToken);
         res.json(guideData);
     } catch (error) {
         console.error('Error:', error.message);
-        res.status(500).json({
-            error: error.message
-        });
+        res.status(500).json({ error: error.message });
     }
 }
+
 
 
 app.get('/api/guide', handleGuideRequest);

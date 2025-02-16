@@ -8862,7 +8862,7 @@
                 var isLoading = false;
                 var pendingAppends = [];
           
-                function loadSegment(retryCount = 3) {
+                function loadSegment(retryCount) {
                   // Ensure MediaSource is still open.
                   if (mediaSource.readyState !== "open") {
                     console.warn("MediaSource is no longer open. Aborting segment load.");
@@ -9048,37 +9048,20 @@
                         console.log("Buffer cleared for seeking.");
                         sourceBuffer.removeEventListener('updateend', onSeekBufferClear);
                         isSeeking = false;
-                        loadSegment(); // Start loading from new position.
+                        loadSegment(5); // Start loading from new position.
                         }, { once: true });
                 
                     } catch (e) {
                         console.error("Error clearing buffer during seek:", e);
                         isSeeking = false;
-                        loadSegment(); // Start loading despite error.
+                        loadSegment(5); // Start loading despite error.
                     }
                     } else {
                     isSeeking = false;
-                    loadSegment(); // No buffer to clear, start loading immediately.
+                    loadSegment(5); // No buffer to clear, start loading immediately.
                     }
                 });
 
-                /*
-                      
-                  videoElement.addEventListener('pause', () => {
-                    console.log("Playback paused");
-                    isPaused = true;
-                  });
-          
-                  videoElement.addEventListener('play', () => {
-                    console.log("Playback resumed");
-                    if (isPaused) {
-                      isPaused = false;
-                      loadSegment();
-                    }
-                  });
-                */
-
-          
                   setInterval(() => {
                     if (sourceBuffer.buffered.length > 0) {
                       var currentTime = videoElement.currentTime;
@@ -9087,12 +9070,12 @@
                       console.log(`Buffer status: ${bufferedAhead.toFixed(2)} sec ahead`);
                       if (bufferedAhead < minBufferAhead && !isPaused && !isSeeking && !isLoading) {
                         console.log("Buffer running low, triggering load");
-                        loadSegment();
+                        loadSegment(5);
                       }
                     }
                   }, 1000);
                 }
-                loadSegment();
+                loadSegment(5);
               }
               // --- End fetchSegment function ---
           

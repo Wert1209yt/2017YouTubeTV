@@ -370,7 +370,6 @@
             var d = c.loadParams;
             c.label = function(a, c) {
                 return c ? c : a && a["default"] ? a["default"] : "unknown"
-            }(c.labels, d.label_requested);
             var e = d.scs_path + c.label, f, g = !1, m = [], h = p(P, document, d.is_cobalt, d.csp_nonce, function() {
                 d.use_reset_logic && n("resetTimeout();")
             }), n = p(Q, document, d.is_cobalt, d.csp_nonce, m), G = p(R, document);

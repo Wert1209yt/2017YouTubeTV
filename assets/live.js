@@ -1,146 +1,540 @@
 
-    (function () {
-
-        var b = window.labels;
-
-        if (window.jstiming && window.jstiming.load) {
-            window.jstiming.load.tick("ld_s");
-        }
-
-        var c = window.devjs,
-            e = /[?&]debugjs=1/.exec(window.location.href),
-            f = /[?&]localPlayer=1/.exec(window.location.href),
-            g = /[?&]mediaDiagnostics=1/.exec(window.location.href),
-            h = window.local_label,
-            k = /[?&]reversePairingCode=/.exec(window.location.href),
-            l = /[?&]launch=preload/.exec(window.location.href),
-            m = /[?&]v=[\w+\/\-_=]+/.exec(window.location.href),
-            n = "Cobalt" === window.environment.browser,
-            p = ("Steel" === window.environment.browser || n) && !e && !c,
-            q = window.csp_nonce;
-
-        window.label = h || (b && b["default"]) || "assets";
-
-
-        var r = window.appRoot + window.label,
-            t,
-            u = false,
-            v = [];
-
-        window.resetTimeout = function () {
-            window.clearTimeout(t);
-            if (!u) {
-                t = window.setTimeout(function () {
-                    var a = "local:///web.archive.org/web/20160303220919/https://network_failure.html";
-                    if (n) {
-                        a = "h5vcc://network-failure?retry-url=" + encodeURIComponent(window.location.href.split("#")[0]);
-                    }
-                    window.location.replace(a);
-                }, 40000);
-            }
-        };
-
-        if (p) {
-            window.resetTimeout();
-            window.applicationLoaded = function () {
-                u = true;
-                window.clearTimeout(t);
-            };
-        }
-
-        function loadScript(url) {
-            if (n) {
-                var script = document.createElement("script");
-                script.setAttribute("src", url);
-                if (q) script.setAttribute("nonce", q);
-                document.body.appendChild(script);
-            } else {
-                document.write(q ? `<script src="${url}" nonce="${q}"></script>` : `<script src="${url}"></script>`);
-            }
-            if (p) injectScript("resetTimeout();");
-        }
-
-        function injectScript(content) {
-            if (n) {
-                var script = document.createElement("script");
-                if (q) script.setAttribute("nonce", q);
-                script.innerHTML = content;
-                v.push(script);
-            } else {
-                document.write(q ? `<script nonce="${q}">${content}</script>` : `<script>${content}</script>`);
+    (function() {
+        (function() {
+            var a = 0;
+            return function(c) {
+                return "jscomp_symbol_" + (c || "") + a++
             }
         }
-
-        function loadStylesheet(url) {
-            var link = document.createElement("link");
-            link.setAttribute("rel", "stylesheet");
-            link.setAttribute("type", "text/css");
-            link.setAttribute("href", url);
-            document.head.appendChild(link);
+        )();
+        var b = this;
+        function k(a, c) {
+            a = a.split(".");
+            c = c || b;
+            for (var d = 0; d < a.length; d++)
+                if (c = c[a[d]],
+                null == c)
+                    return null;
+            return c
         }
-
-        window.initializeOrRedirect = function (url) {
-            window.jstiming.load.tick("js_r");
-            if (yt && yt.tv && yt.tv.initializer) {
-                yt.tv.initializer(url);
-            } else {
-                window.location = "https://web.archive.org/web/20160303220919/http://www.youtube.com/error?src=404";
+        function l(a) {
+            var c = typeof a;
+            if ("object" == c)
+                if (a) {
+                    if (a instanceof Array)
+                        return "array";
+                    if (a instanceof Object)
+                        return c;
+                    var d = Object.prototype.toString.call(a);
+                    if ("[object Window]" == d)
+                        return "object";
+                    if ("[object Array]" == d || "number" == typeof a.length && "undefined" != typeof a.splice && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("splice"))
+                        return "array";
+                    if ("[object Function]" == d || "undefined" != typeof a.call && "undefined" != typeof a.propertyIsEnumerable && !a.propertyIsEnumerable("call"))
+                        return "function"
+                } else
+                    return "null";
+            else if ("function" == c && "undefined" == typeof a.call)
+                return "object";
+            return c
+        }
+        function p(a, c) {
+            var d = Array.prototype.slice.call(arguments, 1);
+            return function() {
+                var c = d.slice();
+                c.push.apply(c, arguments);
+                return a.apply(this, c)
             }
-        };
-        
-
-        if (f) {
-            window.environment.player_url = e || c
-                ? "/video/youtube/src/web/javascript/debug-tv-player-en_US.js"
-                : "/video/youtube/src/web/javascript/tv-player-en_US.js";
         }
-
-        if (c || e) {
-            var z = "Google" === window.environment.brand && "Eureka" === window.environment.model;
-            if (c) {
-                window.CLOSURE_BASE_PATH = "/javascript/closure/";
-                window.loadStylesheets = function () {
-                    window.h5CssList.forEach(loadStylesheet);
-                };
-                loadScript(r + "/lasagna-parse.js");
-                loadScript(window.CLOSURE_BASE_PATH + "base.js");
-                loadScript(r + "/deps.js");
-                loadScript(r + "/js/base_initializer.js");
-                loadScript(z ? r + "/js/chromecast_initializer.js" : r + "/js/initializer.js");
-                loadScript(r + "/css-list.js");
-                injectScript("loadStylesheets();");
-            } else {
-                window.CLOSURE_NO_DEPS = true;
-                var cssPath = window.environment.tv_css || "/app-prod.css";
-                loadStylesheet(r + cssPath);
-                loadScript(z ? r + "/chromecast-concat-bundle.js" : r + "/app-concat-bundle.js");
+        function q(a, c) {
+            function d() {}
+            d.prototype = c.prototype;
+            a.superClass_ = c.prototype;
+            a.prototype = new d;
+            a.prototype.constructor = a;
+            a.base = function(a, d, g) {
+                for (var f = Array(arguments.length - 2), e = 2; e < arguments.length; e++)
+                    f[e - 2] = arguments[e];
+                return c.prototype[d].apply(a, f)
             }
-        } else {
-            var cssPath = window.environment.tv_css || "/app-prod.css";
-            loadStylesheet(r + cssPath);
-            loadScript(r + window.environment.tv_binary);
-            if (k || l || m) loadScript(window.environment.player_url);
         }
-
-        window.checkBrokenLabel = function () {
-            if (typeof yt === "undefined" && h) {
-                window.location.href = window.location.href.replace(/([?&])label=[^&]+&?/, "$1stick=0&");
+        ;function r(a) {
+            if (Error.captureStackTrace)
+                Error.captureStackTrace(this, r);
+            else {
+                var c = Error().stack;
+                c && (this.stack = c)
             }
-        };
-
-        injectScript("checkBrokenLabel();");
-
-        if (g) {
-            loadScript(e || c ? r + "/modules/media-diagnostics-debug.js" : r + "/modules/media-diagnostics.js");
+            a && (this.message = String(a));
+            this.reportErrorToServer = !0
         }
-
-        injectScript(`initializeOrRedirect('${r}');`);
-
-        if (n) {
-            window.onload = function () {
-                for (var i = 0; i < v.length; i++) {
-                    document.body.appendChild(v[i]);
+        q(r, Error);
+        r.prototype.name = "CustomError";
+        function t(a, c) {
+            for (var d = a.split("%s"), e = "", f = Array.prototype.slice.call(arguments, 1); f.length && 1 < d.length; )
+                e += d.shift() + f.shift();
+            return e + d.join("%s")
+        }
+        ;function u(a, c) {
+            c.unshift(a);
+            r.call(this, t.apply(null, c));
+            c.shift();
+            this.messagePattern = a
+        }
+        q(u, r);
+        u.prototype.name = "AssertionError";
+        function v(a, c, d) {
+            if (!a) {
+                var e = Array.prototype.slice.call(arguments, 2)
+                  , f = "Assertion failed";
+                if (c) {
+                    f += ": " + c;
+                    var g = e
                 }
-            };
+                throw new u("" + f,g || []);
+            }
+            return a
         }
-    })();
+        function w(a, c) {
+            throw new u("Failure" + (a ? ": " + a : ""),Array.prototype.slice.call(arguments, 1));
+        }
+        ;function y(a) {
+            this.tagName_ = a
+        }
+        y.prototype.toString = function() {
+            return this.tagName_
+        }
+        ;
+        new y("A");
+        new y("ABBR");
+        new y("ACRONYM");
+        new y("ADDRESS");
+        new y("APPLET");
+        new y("AREA");
+        new y("ARTICLE");
+        new y("ASIDE");
+        new y("AUDIO");
+        new y("B");
+        new y("BASE");
+        new y("BASEFONT");
+        new y("BDI");
+        new y("BDO");
+        new y("BIG");
+        new y("BLOCKQUOTE");
+        new y("BODY");
+        new y("BR");
+        new y("BUTTON");
+        new y("CANVAS");
+        new y("CAPTION");
+        new y("CENTER");
+        new y("CITE");
+        new y("CODE");
+        new y("COL");
+        new y("COLGROUP");
+        new y("COMMAND");
+        new y("DATA");
+        new y("DATALIST");
+        new y("DD");
+        new y("DEL");
+        new y("DETAILS");
+        new y("DFN");
+        new y("DIALOG");
+        new y("DIR");
+        new y("DIV");
+        new y("DL");
+        new y("DT");
+        new y("EM");
+        new y("EMBED");
+        new y("FIELDSET");
+        new y("FIGCAPTION");
+        new y("FIGURE");
+        new y("FONT");
+        new y("FOOTER");
+        new y("FORM");
+        new y("FRAME");
+        new y("FRAMESET");
+        new y("H1");
+        new y("H2");
+        new y("H3");
+        new y("H4");
+        new y("H5");
+        new y("H6");
+        new y("HEAD");
+        new y("HEADER");
+        new y("HGROUP");
+        new y("HR");
+        new y("HTML");
+        new y("I");
+        new y("IFRAME");
+        new y("IMG");
+        new y("INPUT");
+        new y("INS");
+        new y("ISINDEX");
+        new y("KBD");
+        new y("KEYGEN");
+        new y("LABEL");
+        new y("LEGEND");
+        new y("LI");
+        new y("LINK");
+        new y("MAP");
+        new y("MARK");
+        new y("MATH");
+        new y("MENU");
+        new y("META");
+        new y("METER");
+        new y("NAV");
+        new y("NOFRAMES");
+        new y("NOSCRIPT");
+        new y("OBJECT");
+        new y("OL");
+        new y("OPTGROUP");
+        new y("OPTION");
+        new y("OUTPUT");
+        new y("P");
+        new y("PARAM");
+        new y("PRE");
+        new y("PROGRESS");
+        new y("Q");
+        new y("RP");
+        new y("RT");
+        new y("RUBY");
+        new y("S");
+        new y("SAMP");
+        new y("SCRIPT");
+        new y("SECTION");
+        new y("SELECT");
+        new y("SMALL");
+        new y("SOURCE");
+        new y("SPAN");
+        new y("STRIKE");
+        new y("STRONG");
+        new y("STYLE");
+        new y("SUB");
+        new y("SUMMARY");
+        new y("SUP");
+        new y("SVG");
+        new y("TABLE");
+        new y("TBODY");
+        new y("TD");
+        new y("TEMPLATE");
+        new y("TEXTAREA");
+        new y("TFOOT");
+        new y("TH");
+        new y("THEAD");
+        new y("TIME");
+        new y("TITLE");
+        new y("TR");
+        new y("TRACK");
+        new y("TT");
+        new y("U");
+        new y("UL");
+        new y("VAR");
+        new y("VIDEO");
+        new y("WBR");
+        function z() {
+            this.stringConstValueWithSecurityContract__googStringSecurityPrivate_ = "";
+            this.STRING_CONST_TYPE_MARKER__GOOG_STRING_SECURITY_PRIVATE_ = A
+        }
+        z.prototype.implementsGoogStringTypedString = !0;
+        z.prototype.getTypedStringValue = function() {
+            return this.stringConstValueWithSecurityContract__googStringSecurityPrivate_
+        }
+        ;
+        z.prototype.toString = function() {
+            return "Const{" + this.stringConstValueWithSecurityContract__googStringSecurityPrivate_ + "}"
+        }
+        ;
+        var A = {};
+        (new z).stringConstValueWithSecurityContract__googStringSecurityPrivate_ = "";
+        function B() {
+            this.privateDoNotAccessOrElseSafeScriptWrappedValue_ = "";
+            this.SAFE_SCRIPT_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = C
+        }
+        B.prototype.implementsGoogStringTypedString = !0;
+        var C = {};
+        B.prototype.getTypedStringValue = function() {
+            return this.privateDoNotAccessOrElseSafeScriptWrappedValue_
+        }
+        ;
+        B.prototype.toString = function() {
+            return "SafeScript{" + this.privateDoNotAccessOrElseSafeScriptWrappedValue_ + "}"
+        }
+        ;
+        B.prototype.goog_html_SafeScript_prototype$initSecurityPrivateDoNotAccessOrElse_ = function(a) {
+            this.privateDoNotAccessOrElseSafeScriptWrappedValue_ = a;
+            return this
+        }
+        ;
+        (new B).goog_html_SafeScript_prototype$initSecurityPrivateDoNotAccessOrElse_("");
+        function D() {
+            this.goog_html_SafeUrl$privateDoNotAccessOrElseSafeHtmlWrappedValue_ = "";
+            this.SAFE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = E
+        }
+        D.prototype.implementsGoogStringTypedString = !0;
+        D.prototype.getTypedStringValue = function() {
+            return this.goog_html_SafeUrl$privateDoNotAccessOrElseSafeHtmlWrappedValue_
+        }
+        ;
+        D.prototype.implementsGoogI18nBidiDirectionalString = !0;
+        D.prototype.getDirection = function() {
+            return 1
+        }
+        ;
+        D.prototype.toString = function() {
+            return "SafeUrl{" + this.goog_html_SafeUrl$privateDoNotAccessOrElseSafeHtmlWrappedValue_ + "}"
+        }
+        ;
+        var F = /^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))/i
+          , E = {};
+        function H(a) {
+            var c = new D;
+            c.goog_html_SafeUrl$privateDoNotAccessOrElseSafeHtmlWrappedValue_ = a;
+            return c
+        }
+        H("about:blank");
+        function I() {
+            this.privateDoNotAccessOrElseSafeStyleWrappedValue_ = "";
+            this.SAFE_STYLE_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = J
+        }
+        I.prototype.implementsGoogStringTypedString = !0;
+        var J = {};
+        I.prototype.getTypedStringValue = function() {
+            return this.privateDoNotAccessOrElseSafeStyleWrappedValue_
+        }
+        ;
+        I.prototype.toString = function() {
+            return "SafeStyle{" + this.privateDoNotAccessOrElseSafeStyleWrappedValue_ + "}"
+        }
+        ;
+        I.prototype.goog_html_SafeStyle_prototype$initSecurityPrivateDoNotAccessOrElse_ = function(a) {
+            this.privateDoNotAccessOrElseSafeStyleWrappedValue_ = a;
+            return this
+        }
+        ;
+        (new I).goog_html_SafeStyle_prototype$initSecurityPrivateDoNotAccessOrElse_("");
+        function K() {
+            this.privateDoNotAccessOrElseSafeStyleSheetWrappedValue_ = "";
+            this.SAFE_STYLE_SHEET_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = L
+        }
+        K.prototype.implementsGoogStringTypedString = !0;
+        var L = {};
+        K.prototype.getTypedStringValue = function() {
+            return this.privateDoNotAccessOrElseSafeStyleSheetWrappedValue_
+        }
+        ;
+        K.prototype.toString = function() {
+            return "SafeStyleSheet{" + this.privateDoNotAccessOrElseSafeStyleSheetWrappedValue_ + "}"
+        }
+        ;
+        K.prototype.goog_html_SafeStyleSheet_prototype$initSecurityPrivateDoNotAccessOrElse_ = function(a) {
+            this.privateDoNotAccessOrElseSafeStyleSheetWrappedValue_ = a;
+            return this
+        }
+        ;
+        (new K).goog_html_SafeStyleSheet_prototype$initSecurityPrivateDoNotAccessOrElse_("");
+        function M() {
+            this.goog_html_SafeHtml$privateDoNotAccessOrElseSafeHtmlWrappedValue_ = "";
+            this.SAFE_HTML_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = N;
+            this.dir_ = null
+        }
+        M.prototype.implementsGoogI18nBidiDirectionalString = !0;
+        M.prototype.getDirection = function() {
+            return this.dir_
+        }
+        ;
+        M.prototype.implementsGoogStringTypedString = !0;
+        M.prototype.getTypedStringValue = function() {
+            return this.goog_html_SafeHtml$privateDoNotAccessOrElseSafeHtmlWrappedValue_
+        }
+        ;
+        M.prototype.toString = function() {
+            return "SafeHtml{" + this.goog_html_SafeHtml$privateDoNotAccessOrElseSafeHtmlWrappedValue_ + "}"
+        }
+        ;
+        var N = {};
+        M.prototype.goog_html_SafeHtml_prototype$initSecurityPrivateDoNotAccessOrElse_ = function(a, c) {
+            this.goog_html_SafeHtml$privateDoNotAccessOrElseSafeHtmlWrappedValue_ = a;
+            this.dir_ = c;
+            return this
+        }
+        ;
+        (new M).goog_html_SafeHtml_prototype$initSecurityPrivateDoNotAccessOrElse_("<!DOCTYPE html>", 0);
+        (new M).goog_html_SafeHtml_prototype$initSecurityPrivateDoNotAccessOrElse_("", 0);
+        (new M).goog_html_SafeHtml_prototype$initSecurityPrivateDoNotAccessOrElse_("<br>", 0);
+        var yt = {};
+        b.CLOSURE_UNCOMPILED_DEFINES = {
+            BEDROCK_DEV_JS: !0
+        };
+        function O(a, c) {
+            c = void 0 === c ? b : c;
+            var d = c.loadParams;
+            c.label = function(a, c) {
+                return c ? c : a && a["default"] ? a["default"] : "unknown"
+            }(c.labels, d.label_requested);
+            var e = d.scs_path + c.label, f, g = !1, m = [], h = p(P, document, d.is_cobalt, d.csp_nonce, function() {
+                d.use_reset_logic && n("resetTimeout();")
+            }), n = p(Q, document, d.is_cobalt, d.csp_nonce, m), G = p(R, document);
+            c.resetTimeout = function() {
+                c.clearTimeout(f);
+                g || (f = c.setTimeout(function() {
+                    var a = "local:///web.archive.org/web/20171019111601/https://network_failure.html";
+                    d.is_cobalt && (a = "h5vcc://network-failure?retry-url=" + encodeURIComponent(c.location.href.split("#")[0]));
+                    c.location.replace(a)
+                }, 4E4))
+            }
+            ;
+            d.use_reset_logic && (c.resetTimeout(),
+            c.applicationLoaded = function() {
+                g = !0;
+                c.clearTimeout(f)
+            }
+            );
+            c.initializeOrRedirect = function(d) {
+                var e = k("ytcsi.tick", c);
+                e && e("js_r");
+                (e = k(a.initializerPath)) ? e(d) : c.location = "https://web.archive.org/web/20171019111601/http://www.youtube.com/error?src=404"
+            }
+            ;
+            d.load_steel_api && h(e + "/api-compiled.js");
+            var x = a.prodCssOverride || d.tv_css;
+            d.debugjs ? (c.CLOSURE_NO_DEPS = !0,
+            x && G(e + x),
+            h(e + a.debugJsInitializer)) : d.devjs || (x && G(e + x),
+            h(e + (a.prodJsOverride || d.tv_binary)));
+            d.load_player && h(d.player_url);
+            c.checkBrokenLabel = function() {
+                if ("undefined" == typeof yt && d.label_requested) {
+                    var a = c.location
+                      , e = c.location.href.replace(/([?&])label=[^&]+&?/, "$1stick=0&");
+                    var f = (f = a && a.ownerDocument) && (f.defaultView || f.parentWindow) || b;
+                    if ("undefined" != typeof f.Location && "undefined" != typeof f.Element) {
+                        f = a && (a instanceof f.Location || !(a instanceof f.Element));
+                        var g = typeof a;
+                        g = "object" == g && null != a || "function" == g ? a.constructor.displayName || a.constructor.name || Object.prototype.toString.call(a) : void 0 === a ? "undefined" : null === a ? "null" : typeof a;
+                        v(f, "Argument is not a Location (or a non-Element mock); got: %s", g)
+                    }
+                    e instanceof D || e instanceof D || (e = e.implementsGoogStringTypedString ? e.getTypedStringValue() : String(e),
+                    v(F.test(e)) || (e = "about:invalid#zClosurez"),
+                    e = H(e));
+                    e instanceof D && e.constructor === D && e.SAFE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ === E ? e = e.goog_html_SafeUrl$privateDoNotAccessOrElseSafeHtmlWrappedValue_ : (w("expected object of type SafeUrl, got '" + e + "' of type " + l(e)),
+                    e = "type_error:SafeUrl");
+                    a.href = e
+                }
+            }
+            ;
+            n("checkBrokenLabel()");
+            n("initializeOrRedirect('" + e + "');");
+            d.is_cobalt && (c.onload = function() {
+                for (var a = 0, c = m.length; a < c; ++a)
+                    document.body.appendChild(m[a])
+            }
+            )
+        }
+        function P(a, c, d, e, f) {
+            c ? (c = S(a, d),
+            c.setAttribute("src", f),
+            a.body.appendChild(c)) : d ? a.write('<script src="' + f + '" nonce="' + d + '">\x3c/script>') : a.write('<script src="' + f + '">\x3c/script>');
+            e()
+        }
+        function Q(a, c, d, e, f) {
+            c ? (a = S(a, d),
+            a.innerHTML = f,
+            e.push(a)) : d ? a.write('<script nonce="' + d + '">' + f + "\x3c/script>") : a.write("<script>" + f + "\x3c/script>")
+        }
+        function S(a, c) {
+            a = a.createElement("script");
+            c && a.setAttribute("nonce", c);
+            return a
+        }
+        function R(a, c) {
+            var d = a.createElement("link");
+            d.setAttribute("rel", "stylesheet");
+            d.setAttribute("type", "text/css");
+            d.setAttribute("href", c);
+            a.head.appendChild(d)
+        }
+        ;var T = /^\?/
+          , U = /^-?(?:|0|[1-9][0-9]*)(?:\.[0-9]*)?$/;
+        function V(a) {
+            if ("number" === typeof a)
+                return a;
+            if (a && "string" === typeof a && U.test(a))
+                return Number(a);
+            if ("string" === typeof a && "" === a.trim())
+                return a;
+            var c = String(a).toLowerCase();
+            return "true" === c || 1 == a ? !0 : "false" === c || 0 == a ? !1 : a
+        }
+        function W(a) {
+            var c = {};
+            if (a) {
+                a = a.replace(T, "");
+                a = a.split("&");
+                for (var d, e = 0, f = a.length; e < f; ++e) {
+                    d = a[e].split("=");
+                    var g = d.shift();
+                    d = V(d.join("="));
+                    d = "string" == typeof d ? decodeURIComponent(d) : d;
+                    c[g] = d
+                }
+            }
+            return c
+        }
+        function X(a, c, d) {
+            d = void 0 === d ? !1 : d;
+            a: {
+                for (e in c) {
+                    var e = !1;
+                    break a
+                }
+                e = !0
+            }
+            if (!e) {
+                e = -1 == a.indexOf("?") ? "?" : "&";
+                var f = void 0 === d ? !1 : d;
+                d = [];
+                f = void 0 === f ? !1 : f;
+                f = void 0 === f ? !1 : f;
+                var g = {}, m;
+                for (m in c) {
+                    var h = c[m];
+                    "undefined" !== typeof h && null !== h && (f ? g[m] = V(h) : "" !== h && (g[m] = V(h || 0)))
+                }
+                for (var n in g)
+                    d.push(encodeURIComponent(n) + "=" + encodeURIComponent(g[n]));
+                a += e + d.join("&")
+            }
+            return a
+        }
+        ;(function(a) {
+            a = void 0 === a ? b : a;
+            var c = W(a.location.hash.replace(/#[^?]*\??/, ""));
+            if (c.theme && "cl" != c.theme) {
+                var d = (a.location.search || "") + "&" + (a.location.hash || "").replace(/#[^?]*\??/, "");
+                d = W(d);
+                d = X("/tv", d);
+                a.location.assign(d)
+            } else {
+                if (c = (c = a.h5vcc) && c.dial && c.dial.DialNativeServiceHandler)
+                    try {
+                        d = new c,
+                        d.registerCallback(function(c) {
+                            var d = W(c);
+                            d.theme && "cl" != d.theme ? a.location.assign(X("/tv", d)) : a.pendingDialNativeServiceRequest = c
+                        }),
+                        a.dialNativeServiceHandler = d
+                    } catch (e) {
+                        console.error("Steel Dial Server Creation exception: " + e)
+                    }
+                d = {
+                    initializerPath: "yt.tv.initialize"
+                };
+                "Cast Receiver" == a.environment.browser ? (d.devJsInitializerModule = "yt.tv.cast.initializeChromeless",
+                d.debugJsInitializer = "/chromecast-concat-bundle.js") : (d.devJsInitializerModule = "yt.tv.initializeKabuki",
+                d.debugJsInitializer = "/app-concat-bundle.js");
+                O(d, a)
+            }
+        }
+        )();
+    }
+    ).call(this);

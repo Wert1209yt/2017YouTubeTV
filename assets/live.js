@@ -536,4 +536,4 @@
         }
         )();
     }
-    ).call(this);
+    .call(this);

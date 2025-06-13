@@ -144,6 +144,16 @@
         <div id="loader"></div>
         <div id="leanback"></div>
         <script>
+                
+            var currentHost = window.location.hostname;Add commentMore actions
+            var currentPort = window.location.port;
+
+            var APP_URL = "http://" + currentHost + ":" + (currentPort || "8090");  
+            var PROXY_URL = "http://" + currentHost + ":8070"; 
+
+            console.log("APP_URL:", APP_URL);
+            console.log("PROXY_URL:", PROXY_URL);
+                
             window['swfConfig'] = {
                 "params": {
                     "allowscriptaccess": "always",
@@ -179,8 +189,8 @@
                 "sts": 17463,
                 "html5": true,
                 "assets": {
-                    "js": "/assets/base.js",
-                    "css": "/assets/www-player.css"
+                    "js": APP_URL + "/assets/base.js",
+                    "css": APP_URL + "/assets/www-player.css"
                 }
             };
             window['environment'] = {

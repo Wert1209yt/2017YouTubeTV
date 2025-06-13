@@ -28,7 +28,7 @@
                     d().wasAlternateProtocolAvailable && (a += "&apa=1");
                 }
                 var k = c.t,
-                    q = k.start,
+                    q = k.,
                     d = [],
                     h = [],
                     g;

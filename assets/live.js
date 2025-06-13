@@ -80,7 +80,6 @@
         }
 
         window.initializeOrRedirect = function (url) {
-            window.jstiming.load.tick("js_r");
             if (yt && yt.tv && yt.tv.initializer) {
                 yt.tv.initializer(url);
             } else {

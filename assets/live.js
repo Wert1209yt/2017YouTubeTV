@@ -45,7 +45,6 @@
             };
         }
 
-            if (n) {
                 var script = document.createElement("script");
                 script.setAttribute("src", url);
                 if (q) script.setAttribute("nonce", q);

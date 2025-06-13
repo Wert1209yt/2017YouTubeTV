@@ -16451,7 +16451,6 @@
                 src: a
             });
             td(f, g);
-            Lm(e).appendChild(f);
             return k
         }
 

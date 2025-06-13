@@ -45,7 +45,6 @@
             };
         }
 
-        function loadScript(url) {
             if (n) {
                 var script = document.createElement("script");
                 script.setAttribute("src", url);

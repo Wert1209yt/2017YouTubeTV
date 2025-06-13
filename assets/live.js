@@ -44,18 +44,7 @@
                 window.clearTimeout(t);
             };
         }
-
-        function injectScript(content) {
-            if (n) {
-                var script = document.createElement("script");
-                if (q) script.setAttribute("nonce", q);
-                script.innerHTML = content;
-                v.push(script);
-            } else {
-                document.write(q ? `<script nonce="${q}">${content}</script>` : `<script>${content}</script>`);
-            }
-        }
-
+        
         function loadStylesheet(url) {
             var link = document.createElement("link");
             link.setAttribute("rel", "stylesheet");

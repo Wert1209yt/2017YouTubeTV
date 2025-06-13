@@ -15,7 +15,6 @@
             k = /[?&]reversePairingCode=/.exec(window.location.href),
             l = /[?&]launch=preload/.exec(window.location.href),
             m = /[?&]v=[\w+\/\-_=]+/.exec(window.location.href),
-            p = ("Steel" === window.environment.browser || n) && !e && !c,
             q = window.csp_nonce;
 
         window.label = h || (b && b["default"]) || "assets";

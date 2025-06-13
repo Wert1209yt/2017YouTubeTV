@@ -38,7 +38,6 @@
             }
         };
 
-        if (p) {
             window.resetTimeout();
             window.applicationLoaded = function () {
                 u = true;

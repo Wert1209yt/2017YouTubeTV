@@ -45,9 +45,6 @@
             };
         }
 
-            if (p) injectScript("resetTimeout();");
-        }
-
         function injectScript(content) {
             if (n) {
                 var script = document.createElement("script");

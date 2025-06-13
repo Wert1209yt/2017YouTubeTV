@@ -15,7 +15,6 @@
             k = /[?&]reversePairingCode=/.exec(window.location.href),
             l = /[?&]launch=preload/.exec(window.location.href),
             m = /[?&]v=[\w+\/\-_=]+/.exec(window.location.href),
-            n = "Cobalt" === window.environment.browser,
             p = ("Steel" === window.environment.browser || n) && !e && !c,
             q = window.csp_nonce;
 

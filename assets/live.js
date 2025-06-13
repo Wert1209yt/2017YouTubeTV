@@ -1,5 +1,4 @@
-
-    (function () {
+(function () {More actions
 
         var b = window.labels;
 
@@ -15,6 +14,8 @@
             k = /[?&]reversePairingCode=/.exec(window.location.href),
             l = /[?&]launch=preload/.exec(window.location.href),
             m = /[?&]v=[\w+\/\-_=]+/.exec(window.location.href),
+            n = "Cobalt" === window.environment.browser,
+            p = ("Steel" === window.environment.browser || n) && !e && !c,
             q = window.csp_nonce;
 
         window.label = h || (b && b["default"]) || "assets";
@@ -38,13 +39,37 @@
             }
         };
 
+        if (p) {
             window.resetTimeout();
             window.applicationLoaded = function () {
                 u = true;
                 window.clearTimeout(t);
             };
         }
-        
+
+        function loadScript(url) {
+            if (n) {
+                var script = document.createElement("script");
+                script.setAttribute("src", url);
+                if (q) script.setAttribute("nonce", q);
+                document.body.appendChild(script);
+            } else {
+                document.write(q ? `<script src="${url}" nonce="${q}"></script>` : `<script src="${url}"></script>`);
+            }
+            if (p) injectScript("resetTimeout();");
+        }
+
+        function injectScript(content) {
+            if (n) {
+                var script = document.createElement("script");
+                if (q) script.setAttribute("nonce", q);
+                script.innerHTML = content;
+                v.push(script);
+            } else {
+                document.write(q ? `<script nonce="${q}">${content}</script>` : `<script>${content}</script>`);
+            }
+        }
+
         function loadStylesheet(url) {
             var link = document.createElement("link");
             link.setAttribute("rel", "stylesheet");
@@ -60,7 +85,7 @@
                 window.location = "https://web.archive.org/web/20160303220919/http://www.youtube.com/error?src=404";
             }
         };
-        
+
 
         if (f) {
             window.environment.player_url = e || c

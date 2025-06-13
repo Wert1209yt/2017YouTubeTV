@@ -79,7 +79,7 @@
             ia = 0;
 
         function ja(a, b, c) {
-            return a.call.apply(a.bind, arguments)
+            return a.apply(a.bind, arguments)
         }
 
         function ka(a, b, c) {

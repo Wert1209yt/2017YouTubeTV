@@ -20698,7 +20698,6 @@
         };
         d.Hl = function (a) {
             var b = this.f[a];
-            b || (b = new this.R.jstiming.Timer, b.name = a, this.f[a] = b);
             return b
         };
         d.fV = function (a) {

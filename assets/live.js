@@ -1,4 +1,4 @@
-(function () {More actions
+(function () {
 
         var b = window.labels;
 

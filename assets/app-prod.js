@@ -30338,7 +30338,8 @@
         }
 
         wu.prototype.f = function (a, b, c) {
-            console.trace("Trace for missing source:", b);
+            console.log('this.g (instance source):', this.g);
+            console.log('a (component data):', a && Object.keys(a));
             console.log('Entering wu.prototype.f with arguments:', a, b, c);
         
             // Check if b is provided, if not throw an error
